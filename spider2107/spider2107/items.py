@@ -6,6 +6,9 @@
 import scrapy
 
 
+class NyaaItem(scrapy.Item):
+    title = scrapy.Field()
+
 class MovieItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()

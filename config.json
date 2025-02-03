@@ -1,0 +1,12 @@
+{
+    "spider2107": {
+        "project_path": "spider2107",
+        "spiders": {
+            "douban": {},
+            "nyaa": {
+                "f": "0",
+                "c": "0_0"
+            }
+        }
+    }
+}

@@ -8,8 +8,11 @@
 from itemadapter import ItemAdapter
 import openpyxl
 
+class NyaaPipeline:
+    def process_item(self, item, spider):
+        return item
 
-class Spider2107Pipeline:
+class DoubanPipeline:
     def __init__(self):
         self.wb = openpyxl.Workbook()
         self.ws = self.wb.active
