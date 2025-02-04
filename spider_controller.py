@@ -13,7 +13,7 @@ class SpiderController:
         self.original_cwd = os.getcwd()  # 保存原始工作目录
 
     def load_config(self, config_file):
-        with open(config_file) as f:
+        with open(config_file,'r',encoding="UTF-8") as f:
             return json.load(f)
 
     def ensure_result_dir(self):
@@ -55,7 +55,12 @@ class SpiderController:
 
         # 将参数添加到 Scrapy 的 settings 中
         for key, value in spider_config.items():
-            process.settings.set(key, value)
+            if isinstance(value, list):
+                # 如果值是列表，直接设置
+                process.settings.set(key, value)
+            else:
+                # 如果不是列表，将其转换为单元素列表
+                process.settings.set(key, [value])
 
         print(f"Starting spider: {spider_name} in project: {project_name} with config: {spider_config}")
         print(f"Additional settings: {kwargs}")

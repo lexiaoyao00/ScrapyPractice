@@ -19,8 +19,8 @@
             "hanime":{
                 "query":"",
                 "type":"",
-                "genre":"",
-                "tags":[],
+                "genre":"裏番",
+                "tags[]":["肉便器"],
                 "sort":"",
                 "year":"",
                 "month":""
