@@ -48,10 +48,14 @@ class SpiderController:
 
         self.set_output(process, output, project_name, spider_name)
 
-        spider_config = self.config[project_name]['spiders'].get(spider_name, {})
-        spider_config.update(kwargs)
+        spider_config = self.config[project_name]['spiders'].get(spider_name, {}).copy()
+
+        # 将传入的参数添加到 Scrapy 的 settings 中
+        for key, value in kwargs.items():
+            process.settings.set(key, value)
 
         print(f"Starting spider: {spider_name} in project: {project_name} with config: {spider_config}")
+        print(f"Additional settings: {kwargs}")
         process.crawl(spider_name, **spider_config)
         process.start()
         os.chdir(self.original_cwd)  # 恢复原始工作目录
