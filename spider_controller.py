@@ -5,11 +5,11 @@ from scrapy.utils.project import get_project_settings
 from scrapy.crawler import CrawlerProcess
 
 class SpiderController:
-    def __init__(self, config_file='config.json', result_dir='results'):
+    def __init__(self, config_file='config.json', result_dir='outputs'):
         self.config = self.load_config(config_file)
         self.processes = {}
         self.result_dir = os.path.abspath(result_dir)
-        self.ensure_result_dir()
+        # self.ensure_result_dir()
         self.original_cwd = os.getcwd()  # 保存原始工作目录
 
     def load_config(self, config_file):
@@ -32,6 +32,7 @@ class SpiderController:
 
     def set_output(self, process, output, project_name, spider_name):
         if output:
+            self.ensure_result_dir()
             base_name, ext = os.path.splitext(output)
             file_name = f"{base_name}_{project_name}_{spider_name}{ext}"
             spider_output = os.path.join(self.result_dir, file_name)
@@ -50,8 +51,10 @@ class SpiderController:
 
         spider_config = self.config[project_name]['spiders'].get(spider_name, {}).copy()
 
-        # 将传入的参数添加到 Scrapy 的 settings 中
-        for key, value in kwargs.items():
+        spider_config.update(kwargs)
+
+        # 将参数添加到 Scrapy 的 settings 中
+        for key, value in spider_config.items():
             process.settings.set(key, value)
 
         print(f"Starting spider: {spider_name} in project: {project_name} with config: {spider_config}")
