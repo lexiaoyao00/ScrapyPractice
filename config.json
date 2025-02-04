@@ -12,5 +12,19 @@
                 "o": "desc"
             }
         }
+    },
+    "mySpider":{
+        "project_path": "mySpider",
+        "spiders":{
+            "hanime":{
+                "query":"",
+                "type":"",
+                "genre":"",
+                "tags":[],
+                "sort":"",
+                "year":"",
+                "month":""
+            }
+        }
     }
 }
