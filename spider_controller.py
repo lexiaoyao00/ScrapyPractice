@@ -4,6 +4,8 @@ import json
 from scrapy.utils.project import get_project_settings
 from scrapy.crawler import CrawlerProcess
 
+# from mySpider.mySpider.pipelines import CollectorPipeline
+
 class SpiderController:
     def __init__(self, config_file='config.json', result_dir='outputs'):
         self.config = self.load_config(config_file)
@@ -64,9 +66,14 @@ class SpiderController:
 
         print(f"Starting spider: {spider_name} in project: {project_name} with config: {spider_config}")
         print(f"Additional settings: {kwargs}")
+        # collector = CollectorPipeline()
         process.crawl(spider_name, **spider_config)
+        # spider = next(iter(process.crawlers)).spider
+        # spider.pipeline = collector
         process.start()
         os.chdir(self.original_cwd)  # 恢复原始工作目录
+
+        # return collector.get_items()
 
     def run_project_spiders(self, project_name, output=None):
         self.setup_project(project_name)
